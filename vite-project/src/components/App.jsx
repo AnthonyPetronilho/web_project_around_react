@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../page/index.css";
-import logo from "../images/logo.svg";
 import avatar from "../images/avatar.jpg";
+import Header from "../../header/Header";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,14 +9,7 @@ function App() {
   return (
     <>
       <div class="page__content">
-        <header class="header page__section">
-          <img
-            alt="Logotipo Around The U.S."
-            class="logo header__logo"
-            src={logo}
-          />
-        </header>
-
+        <Header />
         <main class="content">
           <section class="profile page__section">
             <div class="profile__avatar-container">
