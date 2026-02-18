@@ -1,4 +1,4 @@
-export default function EditProfile() {
+export default function EditAvatar() {
   return (
     <form className="popup__form" id="avatar-form" noValidate>
       <label className="popup__field">

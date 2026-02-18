@@ -1,6 +1,7 @@
 import avatar from "../../assets/images/avatar.jpg";
 import { useState } from "react";
-import EditProfile from "./components/Popup/components/EditAvatar/EditAvatar";
+import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
+import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import NewCard from "./components/Popup/components/NewCard/NewCars";
 import Card from "./components/Popup/components/Card/Card";
 import Popup from "./components/Popup/Popup";

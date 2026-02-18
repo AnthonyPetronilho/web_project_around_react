@@ -1,8 +1,8 @@
-export default function Card() {
-  const { name, link, isLiked } = PaymentResponse.card;
+export default function Card(props) {
+  const { name, link, isLiked } = props.card;
   return (
     <li className="card">
-      <img class="card__image" src={link} alt="" />
+      <img className="card__image" src={link} alt="" />
       <button
         aria-label="Excluir cartão"
         className="card__delete-button"
