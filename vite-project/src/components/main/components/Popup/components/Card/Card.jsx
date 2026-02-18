@@ -1,20 +1,34 @@
 export default function Card(props) {
-  const { name, link, isLiked } = props.card;
+  const { card, onCardClick } = props;
+  const { name, link } = card;
+
+  function handleImageClick() {
+    onCardClick(card);
+  }
+
   return (
     <li className="card">
-      <img className="card__image" src={link} alt="" />
+      <img
+        className="card__image"
+        src={link}
+        alt={name}
+        onClick={handleImageClick}
+        style={{ cursor: "pointer" }}
+      />
+
       <button
         aria-label="Excluir cartão"
         className="card__delete-button"
         type="button"
-      ></button>
+      />
+
       <div className="card__description">
         <h2 className="card__title">{name}</h2>
         <button
           aria-label="Botão de curtir"
           className="card__like-button"
           type="button"
-        ></button>
+        />
       </div>
     </li>
   );
