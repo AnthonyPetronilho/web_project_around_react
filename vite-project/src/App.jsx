@@ -1,35 +1,196 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "../page/index.css";
+import logo from "../images/logo.svg";
+import avatar from "../images/avatar.jpg";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div class="page__content">
+        <header class="header page__section">
+          <img
+            alt="Logotipo Around The U.S."
+            class="logo header__logo"
+            src={logo}
+          />
+        </header>
+
+        <main class="content">
+          <section class="profile page__section">
+            <div class="profile__avatar-container">
+              <img class="profile__image" src={avatar} alt="Avatar" />
+              <button
+                class="profile__avatar-edit-button"
+                type="button"
+                aria-label="Editar foto do perfil"
+              ></button>
+            </div>
+            <div class="profile__info">
+              <h1 class="profile__title">Jacques Cousteau</h1>
+              <button
+                aria-label="Editar perfil"
+                class="profile__edit-button"
+                type="button"
+              ></button>
+              <p class="profile__description">Explorador</p>
+            </div>
+            <button
+              aria-label="Adicionar cartão"
+              class="profile__add-button"
+              type="button"
+            ></button>
+          </section>
+
+          <section class="cards page__section">
+            <ul class="cards__list"></ul>
+          </section>
+
+          <template id="card-template">
+            <li class="card">
+              <img class="card__image" src="" alt="" />
+              <button
+                aria-label="Excluir cartão"
+                class="card__delete-button"
+                type="button"
+              ></button>
+              <div class="card__description">
+                <h2 class="card__title"></h2>
+                <button
+                  aria-label="Botão de curtir"
+                  class="card__like-button"
+                  type="button"
+                ></button>
+              </div>
+            </li>
+          </template>
+        </main>
+
+        <footer class="footer page__section">
+          <p class="footer__copyright">&copy; 2026 Around The U.S.</p>
+        </footer>
+
+        <div class="popup" id="edit-popup">
+          <div class="popup__content">
+            <button
+              aria-label="Fechar pop-up"
+              class="popup__close"
+              type="button"
+            ></button>
+            <h3 class="popup__title">Editar perfil</h3>
+            <form class="popup__form" id="edit-profile-form" novalidate>
+              <label class="popup__field">
+                <input
+                  class="popup__input popup__input_type_name"
+                  id="edit-name"
+                  name="name"
+                  placeholder="Nome"
+                  type="text"
+                  required
+                  minlength="2"
+                  maxlength="40"
+                  aria-describedby="edit-name-error"
+                />
+                <span
+                  class="popup__input-error"
+                  id="edit-name-error"
+                  aria-live="polite"
+                ></span>
+              </label>
+
+              <label class="popup__field">
+                <input
+                  class="popup__input popup__input_type_description"
+                  id="edit-about"
+                  name="description"
+                  placeholder="Sobre mim"
+                  type="text"
+                  required
+                  minlength="2"
+                  maxlength="200"
+                  aria-describedby="edit-about-error"
+                />
+                <span
+                  class="popup__input-error"
+                  id="edit-about-error"
+                  aria-live="polite"
+                ></span>
+              </label>
+
+              <button class="button popup__button" type="submit" disabled>
+                Salvar
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup" id="new-card-popup">
+          <div class="popup__content">
+            <button
+              aria-label="Fechar pop-up"
+              class="popup__close"
+              type="button"
+            ></button>
+            <h3 class="popup__title">Novo local</h3>
+            <form class="popup__form" id="new-card-form">
+              <label class="popup__field">
+                <input
+                  class="popup__input popup__input_type_card-name"
+                  id="new-card-title"
+                  name="place-name"
+                  placeholder="Título"
+                  type="text"
+                  required
+                  minlength="2"
+                  maxlength="30"
+                  aria-describedby="new-card-title-error"
+                />
+                <span
+                  class="popup__input-error"
+                  id="new-card-title-error"
+                  aria-live="polite"
+                ></span>
+              </label>
+
+              <label class="popup__field">
+                <input
+                  class="popup__input popup__input_type_url"
+                  id="new-card-link"
+                  name="link"
+                  placeholder="Link de Imagem"
+                  type="url"
+                  required
+                  aria-describedby="new-card-link-error"
+                />
+                <span
+                  class="popup__input-error"
+                  id="new-card-link-error"
+                  aria-live="polite"
+                ></span>
+              </label>
+
+              <button class="button popup__button" type="submit" disabled>
+                Criar
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="popup" id="image-popup">
+          <div class="popup__content popup__content_content_image">
+            <button
+              aria-label="Fechar pop-up"
+              class="popup__close"
+              type="button"
+            ></button>
+            <img alt="" class="popup__image" src="#" />
+            <p class="popup__caption"></p>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
