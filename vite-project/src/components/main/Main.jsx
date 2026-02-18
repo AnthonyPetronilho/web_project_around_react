@@ -59,8 +59,12 @@ export default function Main() {
   }
 
   function handleCardClick(card) {
-    setSelectedCard(card); // Define qual cartão foi clicado
-    setPopup({ title: null, children: <ImagePopup card={card} /> });
+    setSelectedCard(card);
+    setPopup({
+      title: null,
+      isImage: true,
+      children: <ImagePopup card={card} />,
+    });
   }
 
   return (
@@ -102,7 +106,12 @@ export default function Main() {
       </section>
 
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup
+          onClose={handleClosePopup}
+          title={popup.title}
+          isOpen={true}
+          isImage={popup.isImage}
+        >
           {popup.children}
         </Popup>
       )}
