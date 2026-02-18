@@ -26,28 +26,20 @@ const cards = [
   },
 ];
 
-console.log(cards);
-
 export default function Main() {
   const [popup, setPopup] = useState(null);
-  const [selectedCard, setSelectedCard] = useState(null);
 
   const newCardPopup = {
-    title: "New card",
+    title: "Novo Cartão",
     children: <NewCard />,
   };
   const editProfilePopup = {
-    title: "Edit profile",
+    title: "Editar Perfil",
     children: <EditProfile />,
   };
   const editAvatarPopup = {
-    title: "Edit avatar",
+    title: "Editar Avatar",
     children: <EditAvatar />,
-  };
-
-  const imagePopup = {
-    title: null,
-    children: <ImagePopup card={selectedCard} />,
   };
 
   function handleOpenPopup(popup) {
@@ -59,7 +51,6 @@ export default function Main() {
   }
 
   function handleCardClick(card) {
-    setSelectedCard(card);
     setPopup({
       title: null,
       isImage: true,
@@ -76,6 +67,7 @@ export default function Main() {
             className="profile__avatar-edit-button"
             type="button"
             aria-label="Editar foto do perfil"
+            onClick={() => handleOpenPopup(editAvatarPopup)}
           />
         </div>
 
@@ -85,6 +77,7 @@ export default function Main() {
             aria-label="Editar perfil"
             className="profile__edit-button"
             type="button"
+            onClick={() => handleOpenPopup(editProfilePopup)}
           />
           <p className="profile__description">Explorador</p>
         </div>

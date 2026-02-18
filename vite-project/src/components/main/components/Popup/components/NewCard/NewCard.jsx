@@ -13,7 +13,7 @@ export default function NewCard() {
           maxLength="30"
           minLength="2"
           name="card-name"
-          placeholder="Title"
+          placeholder="Título"
           required
           type="text"
           aria-describedby="new-card-title-error"
@@ -29,7 +29,7 @@ export default function NewCard() {
           className="popup__input popup__input_type_url"
           id="new-card-link"
           name="link"
-          placeholder="Image link"
+          placeholder="Link da Imagem"
           required
           type="url"
           aria-describedby="new-card-link-error"
