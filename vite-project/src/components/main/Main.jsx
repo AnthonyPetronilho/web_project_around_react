@@ -1,6 +1,9 @@
 import avatar from "../../assets/images/avatar.jpg";
 import { useState } from "react";
+import EditProfile from "./components/Popup/components/EditAvatar/EditAvatar";
 import NewCard from "./components/Popup/components/NewCard/NewCars";
+import Card from "./components/Popup/components/Card/Card";
+import Popup from "./components/Popup/Popup";
 
 const cards = [
   {
@@ -78,7 +81,11 @@ export default function Main() {
       </section>
 
       <section className="cards page__section">
-        <ul className="cards__list" />
+        <ul className="cards__list">
+          {cards.map((card) => (
+            <Card key={card._id} card={card} />
+          ))}
+        </ul>
       </section>
 
       {popup && (

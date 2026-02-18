@@ -10,12 +10,12 @@ function App() {
 
   return (
     <>
-      <div class="page__content">
+      <div className="page__content">
         <Header />
         <Main />
         <Footer />
 
-        <div class="popup" id="edit-popup">
+        {/* <div class="popup" id="edit-popup">
           <div class="popup__content">
             <button
               aria-label="Fechar pop-up"
@@ -131,7 +131,7 @@ function App() {
             <img alt="" class="popup__image" src="#" />
             <p class="popup__caption"></p>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
