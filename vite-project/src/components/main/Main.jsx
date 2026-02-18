@@ -2,9 +2,10 @@ import avatar from "../../assets/images/avatar.jpg";
 import { useState } from "react";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
-import NewCard from "./components/Popup/components/NewCard/NewCars";
+import NewCard from "./components/Popup/components/NewCard/NewCard";
 import Card from "./components/Popup/components/Card/Card";
 import Popup from "./components/Popup/Popup";
+import ImagePopup from "./components/Popup/components/ImagePopup/ImagePopup";
 
 const cards = [
   {
@@ -29,6 +30,7 @@ console.log(cards);
 
 export default function Main() {
   const [popup, setPopup] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const newCardPopup = {
     title: "New card",
@@ -43,12 +45,22 @@ export default function Main() {
     children: <EditAvatar />,
   };
 
+  const imagePopup = {
+    title: null,
+    children: <ImagePopup card={selectedCard} />,
+  };
+
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
 
   function handleClosePopup() {
     setPopup(null);
+  }
+
+  function handleCardClick(card) {
+    setSelectedCard(card); // Define qual cartão foi clicado
+    setPopup({ title: null, children: <ImagePopup card={card} /> });
   }
 
   return (
@@ -84,7 +96,7 @@ export default function Main() {
       <section className="cards page__section">
         <ul className="cards__list">
           {cards.map((card) => (
-            <Card key={card._id} card={card} />
+            <Card key={card._id} card={card} onCardClick={handleCardClick} />
           ))}
         </ul>
       </section>

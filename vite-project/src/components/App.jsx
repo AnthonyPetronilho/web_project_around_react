@@ -1,9 +1,9 @@
 import { useState } from "react";
 // import "..index.css";
 
-import Header from "./header/Header";
+import Header from "./Header/Header";
 import Main from "./main/Main";
-import Footer from "./footer/Footer";
+import Footer from "./Footer/Footer";
 
 function App() {
   const [count, setCount] = useState(0);
