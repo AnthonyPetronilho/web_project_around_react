@@ -1,8 +1,9 @@
 import { useState } from "react";
-import "../page/index.css";
+// import "..index.css";
 
 import Header from "./header/Header";
 import Main from "./main/Main";
+import Footer from "./footer/Footer";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -12,10 +13,7 @@ function App() {
       <div class="page__content">
         <Header />
         <Main />
-
-        <footer class="footer page__section">
-          <p class="footer__copyright">&copy; 2026 Around The U.S.</p>
-        </footer>
+        <Footer />
 
         <div class="popup" id="edit-popup">
           <div class="popup__content">
