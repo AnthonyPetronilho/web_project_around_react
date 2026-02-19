@@ -1,7 +1,6 @@
 import { useState } from "react";
-// import "..index.css";
 
-import Header from "./Header/Header";
+import Header from "./header/Header";
 import Main from "./main/Main";
 import Footer from "./Footer/Footer";
 
