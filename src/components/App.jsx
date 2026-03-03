@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import api from "../utils/api";
+
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
+import api from "../utils/api";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -18,11 +20,13 @@ function App() {
   }, []);
 
   return (
-    <div className="page__content">
-      <Header />
-      <Main />
-      <Footer />
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page__content">
+        <Header />
+        <Main />
+        <Footer />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

@@ -1,10 +1,34 @@
-export default function EditProfile() {
+import React, { useContext, useState } from "react";
+import CurrentUserContext from "../../../../../../contexts/CurrentUserContext";
+
+export default function EditProfile({ isOpen, onClose, onUpdateUser }) {
+  const currentUser = useContext(CurrentUserContext);
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  React.useEffect(() => {
+    if (currentUser) {
+      setName(currentUser.name || "");
+      setDescription(currentUser.about || "");
+    }
+  }, [currentUser, isOpen]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onUpdateUser({
+      name,
+      about: description,
+    });
+  }
+
   return (
     <form
       className="popup__form"
       name="profile-form"
       id="edit-profile-form"
       noValidate
+      onSubmit={handleSubmit}
     >
       <label className="popup__field">
         <input
@@ -16,6 +40,8 @@ export default function EditProfile() {
           placeholder="Nome"
           required
           type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           aria-describedby="edit-name-error"
         />
         <span
@@ -35,6 +61,8 @@ export default function EditProfile() {
           placeholder="Sobre mim"
           required
           type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           aria-describedby="edit-about-error"
         />
         <span
