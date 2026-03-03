@@ -13,7 +13,6 @@ function App() {
     api
       .getUserInfo()
       .then((userData) => {
-        console.log("Dados do usuário:", userData);
         setCurrentUser(userData);
       })
       .catch((error) => console.error(error));
