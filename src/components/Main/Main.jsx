@@ -59,6 +59,17 @@ export default function Main() {
       .catch((error) => console.error(error));
   }
 
+  async function handleCardDelete(card) {
+    await api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((state) =>
+          state.filter((currentCard) => currentCard._id !== card._id),
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
   useEffect(() => {
     api
       .getInitialCards()
@@ -118,6 +129,7 @@ export default function Main() {
               card={card}
               onCardClick={handleCardClick}
               onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
             />
           ))}
         </ul>
