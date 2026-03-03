@@ -1,20 +1,16 @@
 import { useState } from "react";
 
-import Header from "./header/Header";
-import Main from "./main/Main";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div className="page__content">
-        <Header />
-        <Main />
-        <Footer />
-      </div>
-    </>
+    <div className="page__content">
+      <Header />
+      <Main />
+      <Footer />
+    </div>
   );
 }
 

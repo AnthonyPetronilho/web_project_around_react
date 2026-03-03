@@ -13,7 +13,6 @@ export default function Card(props) {
         src={link}
         alt={name}
         onClick={handleImageClick}
-        style={{ cursor: "pointer" }}
       />
 
       <button

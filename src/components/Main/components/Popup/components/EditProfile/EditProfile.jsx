@@ -37,7 +37,11 @@ export default function EditProfile() {
           type="text"
           aria-describedby="edit-about-error"
         />
-        <span className="popup__input-error" id="edit-about-error"></span>
+        <span
+          className="popup__input-error"
+          id="edit-about-error"
+          aria-live="polite"
+        ></span>
       </label>
 
       <button className="button popup__button" type="submit" disabled>
