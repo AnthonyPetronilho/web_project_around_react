@@ -9,32 +9,24 @@ import Popup from "./components/Popup/Popup";
 import api from "../../utils/api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Main() {
+export default function Main({ handleOpenPopup, handleClosePopup, popup }) {
   const [cards, setCards] = useState([]);
-  const [popup, setPopup] = useState(null);
 
-  const currentUser = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const newCardPopup = {
     title: "Novo Cartão",
     children: <NewCard />,
   };
+
   const editProfilePopup = {
     title: "Editar Perfil",
-    children: <EditProfile />,
+    children: <EditProfile onClose={handleClosePopup} />,
   };
   const editAvatarPopup = {
     title: "Editar Avatar",
     children: <EditAvatar />,
   };
-
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
-
-  function handleClosePopup() {
-    setPopup(null);
-  }
 
   function handleCardClick(card) {
     setPopup({

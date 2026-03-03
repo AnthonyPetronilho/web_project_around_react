@@ -5,7 +5,7 @@ export default function Card(props) {
   const { card, onCardClick, onCardLike, onCardDelete } = props;
   const { name, link } = card;
 
-  const currentUser = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const isLiked = card.isLiked;
   const isOwn = card.owner?._id === currentUser._id || false;

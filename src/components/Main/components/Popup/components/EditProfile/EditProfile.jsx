@@ -1,26 +1,27 @@
 import React, { useContext, useState } from "react";
 import CurrentUserContext from "../../../../../../contexts/CurrentUserContext";
 
-export default function EditProfile({ isOpen, onClose, onUpdateUser }) {
+export default function EditProfile() {
   const currentUser = useContext(CurrentUserContext);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const { handleUpdateUser } = currentUser;
 
-  React.useEffect(() => {
-    if (currentUser) {
-      setName(currentUser.name || "");
-      setDescription(currentUser.about || "");
-    }
-  }, [currentUser, isOpen]);
+  const [name, setName] = useState(CurrentUserContext.name);
+  const [description, setDescription] = useState(currentUser.about);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onUpdateUser({
-      name,
-      about: description,
-    });
-  }
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    handleUpdateUser({ name, about: description });
+  };
 
   return (
     <form
@@ -41,7 +42,7 @@ export default function EditProfile({ isOpen, onClose, onUpdateUser }) {
           required
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
           aria-describedby="edit-name-error"
         />
         <span
@@ -62,7 +63,7 @@ export default function EditProfile({ isOpen, onClose, onUpdateUser }) {
           required
           type="text"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={handleDescriptionChange}
           aria-describedby="edit-about-error"
         />
         <span
@@ -72,7 +73,7 @@ export default function EditProfile({ isOpen, onClose, onUpdateUser }) {
         ></span>
       </label>
 
-      <button className="button popup__button" type="submit" disabled>
+      <button className="button popup__button" type="submit">
         Salvar
       </button>
     </form>
