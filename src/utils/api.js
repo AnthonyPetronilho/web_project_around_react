@@ -81,7 +81,7 @@ class Api {
       return Promise.reject(`Erro: ${res.status}`);
     });
   }
-  updateAvatar(avatarUrl) {
+  setUserAvatar(avatarUrl) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
