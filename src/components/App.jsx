@@ -9,6 +9,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [popup, setPopup] = useState(null);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -19,6 +20,17 @@ function App() {
         })
         .catch((error) => console.error(error));
     })();
+  }, []);
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar cartões:", err);
+      });
   }, []);
 
   const handleUpdateUser = (data) => {
@@ -53,9 +65,52 @@ function App() {
     })();
   };
 
+  async function handleCardLike(card) {
+    const isLiked = card.isLiked;
+
+    await api
+      .changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard,
+          ),
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  async function handleCardDelete(card) {
+    await api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((state) =>
+          state.filter((currentCard) => currentCard._id !== card._id),
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  const handleAddPlaceSubmit = (newCard) => {
+    (async () => {
+      await api
+        .addCard(newCard)
+        .then((cardData) => {
+          setCards([cardData, ...cards]);
+          handleClosePopup();
+        })
+        .catch((error) => console.error(error));
+    })();
+  };
+
   return (
     <CurrentUserContext.Provider
-      value={{ currentUser, handleUpdateUser, onUpdateAvatar }}
+      value={{
+        currentUser,
+        handleUpdateUser,
+        onUpdateAvatar,
+        handleAddPlaceSubmit,
+      }}
     >
       <div className="page__content">
         <Header />
@@ -64,6 +119,10 @@ function App() {
           handleClosePopup={handleClosePopup}
           popup={popup}
           onUpdateAvatar={onUpdateAvatar}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
         />
         <Footer />
       </div>

@@ -1,17 +1,22 @@
 import avatar from "../../assets/images/avatar.jpg";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import NewCard from "./components/Popup/components/NewCard/NewCard";
 import Card from "./components/Popup/components/Card/Card";
 import ImagePopup from "./components/Popup/components/ImagePopup/ImagePopup";
 import Popup from "./components/Popup/Popup";
-import api from "../../utils/api";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Main({ handleOpenPopup, handleClosePopup, popup }) {
-  const [cards, setCards] = useState([]);
-
+export default function Main({
+  handleOpenPopup,
+  handleClosePopup,
+  popup,
+  onCardClick,
+  onCardDelete,
+  onCardLike,
+  cards,
+}) {
   const { currentUser } = useContext(CurrentUserContext);
 
   const newCardPopup = {
@@ -29,49 +34,13 @@ export default function Main({ handleOpenPopup, handleClosePopup, popup }) {
   };
 
   function handleCardClick(card) {
-    setPopup({
+    const imagePopup = {
       title: null,
       isImage: true,
       children: <ImagePopup card={card} />,
-    });
+    };
+    handleOpenPopup(imagePopup);
   }
-
-  async function handleCardLike(card) {
-    const isLiked = card.isLiked;
-
-    await api
-      .changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard,
-          ),
-        );
-      })
-      .catch((error) => console.error(error));
-  }
-
-  async function handleCardDelete(card) {
-    await api
-      .deleteCard(card._id)
-      .then(() => {
-        setCards((state) =>
-          state.filter((currentCard) => currentCard._id !== card._id),
-        );
-      })
-      .catch((error) => console.error(error));
-  }
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cardsData) => {
-        setCards(cardsData);
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar cartões:", err);
-      });
-  }, []);
 
   return (
     <main className="content">
@@ -120,8 +89,8 @@ export default function Main({ handleOpenPopup, handleClosePopup, popup }) {
               key={card._id}
               card={card}
               onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           ))}
         </ul>

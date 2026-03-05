@@ -1,9 +1,27 @@
+import { useContext, useRef } from "react";
+import CurrentUserContext from "../../../../../../contexts/CurrentUserContext";
+
 export default function NewCard() {
+  const current = useContext(CurrentUserContext);
+  const titleRef = useRef();
+  const linkRef = useRef();
+  const { handleAddPlaceSubmit } = current;
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    handleAddPlaceSubmit({
+      name: titleRef.current.value,
+      link: linkRef.current.value,
+    });
+  };
+
   return (
     <form
       className="popup__form"
       name="card-form"
       id="new-card-form"
+      onSubmit={handleSubmit}
       noValidate
     >
       <label className="popup__field">
@@ -16,6 +34,7 @@ export default function NewCard() {
           placeholder="Título"
           required
           type="text"
+          ref={titleRef}
           aria-describedby="new-card-title-error"
         />
         <span
@@ -32,6 +51,7 @@ export default function NewCard() {
           placeholder="Link da Imagem"
           required
           type="url"
+          ref={linkRef}
           aria-describedby="new-card-link-error"
         />
         <span
@@ -41,7 +61,7 @@ export default function NewCard() {
         ></span>
       </label>
 
-      <button className="button popup__button" type="submit" disabled>
+      <button className="button popup__button" type="submit">
         Criar
       </button>
     </form>
