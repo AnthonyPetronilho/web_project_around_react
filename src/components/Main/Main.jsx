@@ -12,7 +12,6 @@ export default function Main({
   handleOpenPopup,
   handleClosePopup,
   popup,
-  onCardClick,
   onCardDelete,
   onCardLike,
   cards,
