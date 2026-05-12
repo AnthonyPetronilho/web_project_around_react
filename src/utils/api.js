@@ -1,133 +1,92 @@
 class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl;
-    this._headers = options.headers;
+  constructor({ baseUrl }) {
+    this._baseUrl = baseUrl;
+  }
+
+  _getHeaders() {
+    const token = localStorage.getItem("jwt");
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
+  _checkResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Erro: ${res.status}`);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+    }).then(this._checkResponse);
   }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+    }).then(this._checkResponse);
   }
 
   updateUserInfo(userData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: userData.name,
-        about: userData.about,
-      }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+      body: JSON.stringify({ name: userData.name, about: userData.about }),
+    }).then(this._checkResponse);
   }
 
   addCard(cardData) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: cardData.name,
-        link: cardData.link,
-      }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+      body: JSON.stringify({ name: cardData.name, link: cardData.link }),
+    }).then(this._checkResponse);
   }
 
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+    }).then(this._checkResponse);
   }
 
   unlikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+    }).then(this._checkResponse);
   }
+
   setUserAvatar(avatarUrl) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify({ avatar: avatarUrl }),
-    }).then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
-    }).then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+      headers: this._getHeaders(),
+    }).then(this._checkResponse);
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-    if (isLiked) {
-      return this.likeCard(cardId);
-    } else {
-      return this.unlikeCard(cardId);
-    }
+    return isLiked ? this.likeCard(cardId) : this.unlikeCard(cardId);
   }
 
   setUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify({ name, about }),
-    }).then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`Erro: ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 }
 
 const api = new Api({
-  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
-  headers: {
-    authorization: "eb356727-edde-43bf-88cf-6fefe7c1082a",
-    "Content-Type": "application/json",
-  },
+  baseUrl: "http://localhost:3000",
 });
 
 export default api;
